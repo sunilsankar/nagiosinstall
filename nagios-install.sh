@@ -24,7 +24,7 @@ useradd nagios
 /usr/sbin/groupadd nagcmd
 /usr/sbin/usermod -a -G nagcmd nagios
 /usr/sbin/usermod -a -G nagcmd apache
-yum -y install httpd php net-snmp*  mysql-server libdbi-dbd-mysql libdbi-devel php-cli php-mysql gcc glibc glibc-common gd gd-devel php-* perl* make cairo-devel glib2-devel pango-devel openssl* rrdtool* php-gd gd gd-devel gd-progs wget
+yum -y install httpd php net-snmp*  mysql-server libdbi-dbd-mysql libdbi-devel php-cli php-mysql gcc glibc glibc-common gd gd-devel php-* perl* make cairo-devel glib2-devel pango-devel openssl* rrdtool* php-gd gd gd-devel gd-progs wget MySQL-python gcc-c++
 tar -zxvf nagios-3.4.1.tar.gz
 tar -zxvf nagios-plugins-1.4.16.tar.gz
 cd nagios
