@@ -4,10 +4,12 @@
 #Purpose : Installation of Nagios and also intergrate merlin and ninja
 DOWNLOAD_DIR=/root/packages
 NAGIOSPATH=/opt/nagios
-FILE=./root/Nagios.txt.
+FILE=/root/Nagios.txt
 WGET=`/usr/bin/wget`
+ADDONS=/opt/nagios/addons
 NAGIOSDOWNLOAD=http://prdownloads.sourceforge.net/sourceforge/nagios/nagios-3.4.1.tar.gz
 NAGIOSPLUGIN=http://prdownloads.sourceforge.net/sourceforge/nagiosplug/nagios-plugins-1.4.16.tar.gz
+LIVESTATUS=http://mathias-kettner.de/download/mk-livestatus-1.2.0p2.tar.gz
 MERLIN=git://git.op5.org/nagios/merlin.git
 NINJA=git://git.op5.org/nagios/ninja.git
 download () {
@@ -17,6 +19,8 @@ echo "Downloading Nagios Core 3.4.1"
 wget $NAGIOSDOWNLOAD
 echo "Downloading Nagios Plugins 1.4.16"
 wget $NAGIOSPLUGIN
+echo "Downloading Live Status and check_mk"
+wget $LIVESTATUS
 }
 nagiosinstall () {
 cd $DOWNLOAD_DIR
@@ -49,6 +53,15 @@ chmod 755 /sbin/nagioschk
 /etc/init.d/httpd restart
 /etc/init.d/nagios restart
 }
+livestatusinstall () {
+cd $DOWNLOAD_DIR
+tar -zxvf mk-livestatus-1.2.0p2.tar.gz
+cd mk-livestatus-1.2.0p2
+./configure --prefix=$ADDONS/livestatus
+make && make install
+sed -i '/file!!!/ a\broker_module=/opt/nagios/addons/livestatus/lib/mk-livestatus/livestatus.o /opt/nagios/var/rw/live' /opt/nagios/etc/nagios.cfg
+/etc/init.d/nagios restart
+}
 case "$1" in
 'download')
 echo "Downloading Application"
@@ -57,6 +70,10 @@ download
 'nagiosinstall')
 echo "Installing application"
 nagiosinstall
+;;
+'livestatusinstall')
+echo "Installing LiveStatus Application"
+livestatusinstall
 ;;
 *)
 echo "Usage: $0 [download|nagiosinstall]"
