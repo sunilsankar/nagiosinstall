@@ -52,6 +52,10 @@ echo /opt/nagios/bin/nagios -v /opt/nagios/etc/nagios.cfg > /sbin/nagioschk
 chmod 755 /sbin/nagioschk
 /etc/init.d/httpd restart
 /etc/init.d/nagios restart
+echo "Nagios and Nagios Plugins installed successfully"
+echo "Please login with the following Credentials"
+echo "USERNAME: nagiosadmin"
+echo "PASSWORD: nagiosadmin"
 }
 livestatusinstall () {
 cd $DOWNLOAD_DIR
