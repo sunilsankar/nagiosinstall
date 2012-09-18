@@ -76,7 +76,7 @@ echo "Installing LiveStatus Application"
 livestatusinstall
 ;;
 *)
-echo "Usage: $0 [download|nagiosinstall]"
+echo "Usage: $0 [download|nagiosinstall|livestatusinstall]"
 ;;
 esac		
 		
