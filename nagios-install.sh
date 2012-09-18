@@ -12,6 +12,7 @@ NAGIOSPLUGIN=http://prdownloads.sourceforge.net/sourceforge/nagiosplug/nagios-pl
 LIVESTATUS=http://mathias-kettner.de/download/mk-livestatus-1.2.0p2.tar.gz
 MERLIN=git://git.op5.org/nagios/merlin.git
 NINJA=git://git.op5.org/nagios/ninja.git
+HOSTIPADDRESS=`ifconfig  | grep 'inet addr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}'`
 download () {
 mkdir -p $DOWNLOAD_DIR
 cd $DOWNLOAD_DIR
@@ -46,13 +47,13 @@ chkconfig --add nagios
 chkconfig --level 3 nagios on
 chkconfig --level 3 httpd on	
 htpasswd -s -b -c /opt/nagios/etc/htpasswd.users nagiosadmin nagiosadmin
-echo "Please login to http://$HOSTNAME/nagios"
-echo "Default username and password is nagiosadmin"
 echo /opt/nagios/bin/nagios -v /opt/nagios/etc/nagios.cfg > /sbin/nagioschk
 chmod 755 /sbin/nagioschk
 /etc/init.d/httpd restart
 /etc/init.d/nagios restart
 echo "Nagios and Nagios Plugins installed successfully"
+echo "Please access the Nagios Dashboard "
+echo "http://$HOSTIPADDRESS/nagios"
 echo "Please login with the following Credentials"
 echo "USERNAME: nagiosadmin"
 echo "PASSWORD: nagiosadmin"
