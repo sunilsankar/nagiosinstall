@@ -49,6 +49,10 @@ chkconfig --level 3 httpd on
 htpasswd -s -b -c /opt/nagios/etc/htpasswd.users nagiosadmin nagiosadmin
 echo /opt/nagios/bin/nagios -v /opt/nagios/etc/nagios.cfg > /sbin/nagioschk
 chmod 755 /sbin/nagioschk
+#For running commands from website
+/usr/sbin/usermod -a -G nagcmd apache
+chmod 775 /opt/nagios/var/rw
+chmod g+s /opt/nagios/var/rw
 /etc/init.d/httpd restart
 /etc/init.d/nagios restart
 echo "Nagios and Nagios Plugins installed successfully"
